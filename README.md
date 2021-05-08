@@ -20,7 +20,7 @@ pelican --listen
 
 ```
 python download.py
-aws s3 sync downloads/* s3://s.danilorca.com/
+aws s3 sync downloads/ s3://s.danilorca.com/
 ```
 
 
