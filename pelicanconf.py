@@ -1,15 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*- #
 
-AUTHOR = 'Daniela Lorca'
-SITENAME = 'Daniela Lorca'
-SITEURL = ''
+AUTHOR = "Daniela Lorca"
+SITENAME = "Daniela Lorca"
+SITEURL = "https://danilorca.com"
 
-PATH = 'content'
+PATH = "content"
 
-TIMEZONE = 'America/Santiago'
+TIMEZONE = "America/Santiago"
 
-DEFAULT_LANG = 'es'
+DEFAULT_LANG = "es"
 
 # Feed generation is usually not desired when developing
 FEED_ALL_ATOM = None
@@ -19,16 +19,16 @@ AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
 # Blogroll
-LINKS = (('Pelican', 'https://getpelican.com/'),
-         ('Python.org', 'https://www.python.org/'),
-         ('Jinja2', 'https://palletsprojects.com/p/jinja/'),
-         ('You can modify those links in your config file', '#'),)
+LINKS = (("Babytuto", "https://www.babytuto.com/"),
+         ("Radio Agricultura", "https://www.radioagricultura.cl/agriculturatv/2020/05/29/enprendete.html"),
+        )
 
 # Social widget
-SOCIAL = (('You can add links in your config file', '#'),
-          ('Another social link', '#'),)
+SOCIAL = (("LinkedIn", "https://www.linkedin.com/in/danielalorcanunez/"),
+		 )
 
-DEFAULT_PAGINATION = 10
+
+DEFAULT_PAGINATION = 100
 
 # Uncomment following line if you want document-relative URLs when developing
-#RELATIVE_URLS = True
+RELATIVE_URLS = True
