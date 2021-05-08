@@ -23,8 +23,6 @@ python download.py
 aws s3 sync downloads/ s3://s.danilorca.com/
 ```
 
-
-
 ## deploy
 ```
 git push
