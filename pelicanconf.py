@@ -27,7 +27,6 @@ LINKS = (("Babytuto", "https://www.babytuto.com/"),
 SOCIAL = (("LinkedIn", "https://www.linkedin.com/in/danielalorcanunez/"),
 		 )
 
-
 DEFAULT_PAGINATION = 100
 
 # Uncomment following line if you want document-relative URLs when developing
