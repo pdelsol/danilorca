@@ -24,3 +24,8 @@ a {
 a img.play{
 	height: 50px;
 }
+
+aside form.navbar-search input#tipue_search_input{
+	color: black;
+	background-color: white;
+}

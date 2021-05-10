@@ -35,5 +35,8 @@ THEME = "theme"
 THEME_COLOR = "dark"
 SITELOGO = "/images/profile.jpg"
 FAVICON = "/images/background.jpg"
-
 CUSTOM_CSS ="images/extra.css"
+
+PLUGIN_PATHS = ["plugins"]
+PLUGINS = ["tipue_search"]
+DIRECT_TEMPLATES = ["index", "tags", "categories", "authors", "archives", "search"]
