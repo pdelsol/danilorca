@@ -14,9 +14,6 @@ TIMEZONE = "America/Santiago"
 
 DEFAULT_LANG = "es"
 
-# Feed generation is usually not desired when developing
-FEED_RSS = "feed.rss"
-
 # Blogroll
 LINKS = (("Babytuto", "https://www.babytuto.com/"),
          ("Radio Agricultura", "https://www.radioagricultura.cl/agriculturatv/2020/05/29/enprendete.html"),
@@ -37,6 +34,6 @@ SITELOGO = "/images/profile.jpg"
 FAVICON = "/images/background.jpg"
 CUSTOM_CSS ="images/extra.css"
 
-PLUGIN_PATHS = ["plugins"]
-PLUGINS = ["tipue_search"]
-DIRECT_TEMPLATES = ["index", "tags", "categories", "authors", "archives", "search"]
+# PLUGIN_PATHS = ["plugins"]
+# PLUGINS = ["tipue_search"]
+# DIRECT_TEMPLATES = ["index", "tags", "categories", "authors", "archives", "search"]
