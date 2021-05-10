@@ -15,7 +15,7 @@ TIMEZONE = "America/Santiago"
 
 DEFAULT_LANG = "es"
 
-FEED_RSS = "feed.rss"
+# FEED_RSS = "feed.rss"
 
 # Blogroll
 LINKS = (("Babytuto", "https://www.babytuto.com/"),
