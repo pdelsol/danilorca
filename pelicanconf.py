@@ -33,12 +33,12 @@ RELATIVE_URLS = True
 # 
 
 
-THEME = "themes/flex/"
-THEME_COLOR = "dark"
-
-SITELOGO = "/images/profile.jpg"
-FAVICON = "/images/background.jpg"
-
-PLUGIN_PATHS = ["plugins"]
-PLUGINS = ["tipue_search"]
-DIRECT_TEMPLATES = ['index', 'tags', 'categories', 'authors', 'archives', 'search']
+# THEME = "themes/flex/"
+# THEME_COLOR = "dark"
+# 
+# SITELOGO = "/images/profile.jpg"
+# FAVICON = "/images/background.jpg"
+# 
+# PLUGIN_PATHS = ["plugins"]
+# PLUGINS = ["tipue_search"]
+# DIRECT_TEMPLATES = ['index', 'tags', 'categories', 'authors', 'archives', 'search']
