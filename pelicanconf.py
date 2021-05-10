@@ -32,7 +32,6 @@ DEFAULT_PAGINATION = 100
 RELATIVE_URLS = True
 # 
 
-
 THEME = "themes/flex/"
 THEME_COLOR = "dark"
 
@@ -41,4 +40,4 @@ FAVICON = "/images/background.jpg"
 
 PLUGIN_PATHS = ["plugins"]
 PLUGINS = ["tipue_search"]
-DIRECT_TEMPLATES = ['index', 'tags', 'categories', 'authors', 'archives', 'search']
+DIRECT_TEMPLATES = ["index", "tags", "categories", "authors", "archives", "search"]
