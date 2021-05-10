@@ -38,6 +38,7 @@
       {% if  article.featured_image %}
         <img src="{{ article.featured_image }}">
       {% endif %}
+      <a href="{{ article.mp3 }}"><img class="play" src="/images/play.png"></a>
       {{ article.summary }}
       {% if article.content != article.summary %}
         <br>
