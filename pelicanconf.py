@@ -38,3 +38,7 @@ THEME_COLOR = "dark"
 
 SITELOGO = "/images/profile.jpg"
 FAVICON = "/images/background.jpg"
+
+PLUGIN_PATHS = ["plugins"]
+PLUGINS = ["tipue_search"]
+DIRECT_TEMPLATES = ['index', 'tags', 'categories', 'authors', 'archives', 'search']

@@ -10,6 +10,7 @@ requests = "^2.25.1"
 python-dateutil = "^2.8.1"
 ipdb = "^0.13.7"
 pelican = {extras = ["markdown"], version = "^4.6.0"}
+beautifulsoup4 = "^4.9.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
