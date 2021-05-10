@@ -15,7 +15,7 @@ def write_post(day, podcast):
         f"Title: {podcast['titulo']}\n"
         f"Date: {day}\n"
         f"Category: Podcast\n"
-        #f"Mp3: https://s.danilorca.com/{day}.mp3\n"
+        f"Mp3: https://s.danilorca.com/{day}.mp3\n"
         f"\n"
         f"<a href=\"https://s.danilorca.com/{day}.mp3\" type=\"audio/mpeg\">\n"
         f"Escuchar\n"
