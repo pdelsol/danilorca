@@ -1,14 +1,27 @@
 {% extends "base.html" %}
 
-{% block title %}{{ SITENAME }} - Archives{% endblock %}
+{% block title %} &ndash; {{ _('Archives') }}{% endblock %}
 
 {% block content %}
-<h1>Archives for {{ SITENAME }}</h1>
+<article class="single">
+  <header>
+    <h1 id="archives">{{ _('Archives') }}</h1>
+  </header>
+  <div>
+    <dl>
+      {% set previous_date = False %}
 
-<dl>
-{% for article in dates %}
-    <dt>{{ article.locale_date }}</dt>
-    <dd><a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a></dd>
-{% endfor %}
-</dl>
+      {% for article in dates %}
+        {% if article.locale_date != previous_date %}
+          {% set previous_date = article.locale_date %}
+          <dt>{{ article.locale_date }}</dt>
+        {% endif %}
+
+        <dd>
+          <a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a>
+        </dd>
+      {% endfor %}
+    </dl>
+  </div>
+</article>
 {% endblock %}

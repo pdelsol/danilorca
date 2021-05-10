@@ -1,27 +1,29 @@
 {% extends "base.html" %}
-{% block html_lang %}{{ page.lang }}{% endblock %}
 
-{% block title %}{{ SITENAME }} - {{ page.title|striptags }}{%endblock%}
+{% block meta %}
+{{ super() }}
 
-{% block head %}
-  {{ super() }}
-
-  {% import 'translations.html' as translations with context %}
-  {% if translations.entry_hreflang(page) %}
-    {{ translations.entry_hreflang(page) }}
-  {% endif %}
+{% if page.translations -%}
+<link rel="alternate" href="{{ SITEURL }}/{{ page.url }}" hreflang="{{ page.lang }}" />
+{% for p in page.translations %}
+<link rel="alternate" href="{{ SITEURL }}/{{ p.url }}" hreflang="{{ p.lang }}" />
+{% endfor %}
+{% endif %}
 {% endblock %}
 
+{% block title %} &ndash; {{ page.title }}{% endblock %}
+
 {% block content %}
-    <h1>{{ page.title }}</h1>
-    {% import 'translations.html' as translations with context %}
+<article class="single">
+  <header>
+    {% import 'partial/translations.html' as translations with context %}
     {{ translations.translations_for(page) }}
-
-    {{ page.content }}
-
-    {% if page.modified %}
-        <p>
-        Last updated: {{ page.locale_modified }}
-        </p>
-    {% endif %}
+    <h1 id="{{ page.slug }}">{{ page.title }}</h1>
+  </header>
+  <div>
+    {% block before_content %}{% endblock %}
+    {% block page_content %}{{ page.content }}{% endblock %}
+    {% block after_content %}{% endblock %}
+  </div>
+</article>
 {% endblock %}
