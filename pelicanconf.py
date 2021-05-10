@@ -4,6 +4,9 @@
 AUTHOR = "Daniela Lorca"
 SITENAME = "Daniela Lorca"
 SITEURL = "https://danilorca.com"
+SITETITLE = "Daniela Lorca"
+SITESUBTITLE = ""
+SITEDESCRIPTION = ""
 
 PATH = "content"
 
@@ -12,11 +15,7 @@ TIMEZONE = "America/Santiago"
 DEFAULT_LANG = "es"
 
 # Feed generation is usually not desired when developing
-FEED_ALL_ATOM = None
-CATEGORY_FEED_ATOM = None
-TRANSLATION_FEED_ATOM = None
-AUTHOR_FEED_ATOM = None
-AUTHOR_FEED_RSS = None
+FEED_RSS = "feed.rss"
 
 # Blogroll
 LINKS = (("Babytuto", "https://www.babytuto.com/"),
@@ -24,7 +23,7 @@ LINKS = (("Babytuto", "https://www.babytuto.com/"),
         )
 
 # Social widget
-SOCIAL = (("LinkedIn", "https://www.linkedin.com/in/danielalorcanunez/"),
+SOCIAL = (("linkedin", "https://www.linkedin.com/in/danielalorcanunez/"),
 		 )
 
 DEFAULT_PAGINATION = 100
@@ -33,3 +32,8 @@ DEFAULT_PAGINATION = 100
 RELATIVE_URLS = True
 
 THEME = "theme"
+THEME_COLOR = "dark"
+SITELOGO = "/images/profile.jpg"
+FAVICON = "/images/background.jpg"
+
+CUSTOM_CSS ="images/extra.css"
