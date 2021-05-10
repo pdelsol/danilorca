@@ -1,0 +1,31 @@
+aside {
+	background-image: url("/images/background.jpg");
+}
+
+aside a{
+	color: #FF0080;
+	background-color: black;
+	padding: 0px 6px;
+}
+
+body {
+	background-color: black;
+}
+
+ul.social a.sc-linkedin {
+	background-color: black;
+	padding: 0px;
+}
+
+a {
+	color: #FF0080;
+}
+
+a img.play{
+	height: 50px;
+}
+
+aside form.navbar-search input#tipue_search_input{
+	color: black;
+	background-color: white;
+}

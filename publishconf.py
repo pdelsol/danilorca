@@ -13,6 +13,7 @@ from pelicanconf import *
 SITEURL = "https://danilorca.com"
 RELATIVE_URLS = False
 
+FEED_RSS = "feeds/all.rss"
 FEED_ALL_ATOM = "feeds/all.atom.xml"
 CATEGORY_FEED_ATOM = "feeds/{slug}.atom.xml"
 
