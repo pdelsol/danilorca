@@ -6,7 +6,6 @@ name = "pypi"
 [packages]
 pelican = {extras = ["markdown"], version = "*"}
 beautifulsoup4 = "*"
-markdown = "*"
 
 [dev-packages]
 
