@@ -15,10 +15,10 @@ def write_post(day, podcast):
         f"Title: {podcast['titulo']}\n"
         f"Date: {day}\n"
         f"Category: Podcast\n"
+        f"Mp3: https://s.danilorca.com/{day}.mp3\n"
         f"\n"
         f"<a href=\"https://s.danilorca.com/{day}.mp3\" type=\"audio/mpeg\">\n"
-        f"Escuchar<br/>\n"
-        f"<img style=\"height:100px;\" src=\"images/play.png\">\n"
+        f"Escuchar\n"
         f"</a>\n"
     )
     f = open(f"content/{day}.md", "w")
