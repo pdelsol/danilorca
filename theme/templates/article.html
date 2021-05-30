@@ -24,11 +24,9 @@
       {% import 'partial/translations.html' as translations with context %}
       {{ translations.translations_for(article) }}
     {% endif %}
-    <h1 id="{{ article.slug }}">{{ article.title }}</h1>
-    <p>
-      {{ _('Posted on %(when)s in %(category)s',
-           when=article.locale_date,
-           category='<a href="%s/%s">%s</a>'|format(SITEURL, article.category.url, article.category)|safe) }}
+    <h1 id="{{ article.slug }}">{{ article.title }} - {{ article.person }} de {{ article.company }}</h1>
+      {{ _('%(when)s',
+           when=article.locale_date) }}
 
       {% if PLUGINS and 'post_stats' in PLUGINS %}
         &#8226; {{ _('%(minutes)s min read', minutes=article.stats['read_mins']) }}
@@ -46,9 +44,8 @@
     </script>
   {% endif %}
 
-  <div>
-    <a href="{{ article.mp3 }}"><img class="play" src="/images/play.png"></a>
-    {{ article.content }}
+  <div style="text-align: center; background: #eee; padding: 60px 0px 60px 0px;">
+    <a href="{{ article.mp3 }}"><img class="play" src="/images/play.png"><div>Escuchar</div></a>
   </div>
   <div class="tag-cloud">
     <p>
