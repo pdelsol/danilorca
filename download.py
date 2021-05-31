@@ -26,16 +26,17 @@ def write_post(day, podcast):
     f.close()
 
 
-def download_mp3(day, podcast):
+def download_podcast(day, podcast):
     mp3_remote = podcast["contenido"]
     mp3_local = f"downloads/{day}.mp3"
     if not path.exists(mp3_local) or path.getsize(mp3_local) < 20000000:
         print(f"ADD: {day}")
         urlretrieve(f"{mp3_remote[:7]}{quote(mp3_remote[7:])}", mp3_local)
+        download_data(day, podcast)
     else:
         print(f"SKIP: {day}")
 
-def download_content(day, podcast):
+def download_data(day, podcast):
     json_local = f"downloads/{day}.json"
     with open(json_local, "w") as outfile:
         json.dump(podcast, outfile, indent=2, sort_keys=True)
@@ -58,6 +59,5 @@ while date_current <= date_end:
         podcasts = response.json()['post']
         for podcast in podcasts:
             day = podcast["url"][41:51].replace("/","-")
-            download_content(day, podcast)
-            download_mp3(day, podcast)
+            download_podcast(day, podcast)
     date_current += relativedelta(months=1)
