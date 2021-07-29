@@ -15,15 +15,18 @@ TIMEZONE = "America/Santiago"
 DEFAULT_LANG = "es"
 
 # Blogroll
-LINKS = (("Babytuto", "https://www.babytuto.com/"),
-         ("Radio Agricultura", "https://www.radioagricultura.cl/agriculturatv/2020/05/29/enprendete.html"),
-        )
+LINKS = (
+    ("Apple Podcast", "https://podcasts.apple.com/us/podcast/en-préndete/id1578813744"),
+    ("Spotify Podcast", "https://open.spotify.com/show/1RObjUX8Hz1bJHe7yZrPb0"),
+    ("Radio Agricultura Podcast", "https://www.radioagricultura.cl/agriculturatv/2020/05/29/enprendete.html"),
+    ("Babytuto", "https://www.babytuto.com/"),
+    ("Linkedin", "https://www.linkedin.com/in/danielalorcanunez/"),
+)
 
 # Social widget
-SOCIAL = (
-    ("linkedin", "https://www.linkedin.com/in/danielalorcanunez/"),
-    ("rss", "https://danilorca.com/feeds/podcast.atom.xml"),
-)
+#SOCIAL = (
+    #("linkedin", "https://www.linkedin.com/in/danielalorcanunez/"),
+#)
 
 DEFAULT_PAGINATION = 100
 
