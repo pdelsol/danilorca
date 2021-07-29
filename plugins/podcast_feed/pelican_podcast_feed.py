@@ -226,7 +226,7 @@ class iTunesWriter(Writer):
 
         # Title for the article.
         #  ex: <title>Episode Title</title>
-        items["title"] = Markup(f"{item.title} - {item.person} de {item.company}").striptags()
+        items["title"] = Markup(f"{item.title} ({item.company})").striptags()
 
         # Summary for the article. This can be obtained either from
         # a ``:description:`` or a ``:summary:`` directive.
@@ -237,7 +237,7 @@ class iTunesWriter(Writer):
         if hasattr(item, "description"):
             items["itunes:summary"] = item.description
         else:
-            items["itunes:summary"] = Markup(f"{item.title} - {item.person} de {item.company} {tags}").striptags()
+            items["itunes:summary"] = Markup(f"{item.person} de {item.company} ({tags}) conversa con Daniela Lorca en este episodio llamado \"{item.title}\"").striptags()
 
         items["description"] = "<![CDATA[{}]]>".format(
             items["itunes:summary"]
