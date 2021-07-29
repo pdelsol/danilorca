@@ -20,8 +20,10 @@ LINKS = (("Babytuto", "https://www.babytuto.com/"),
         )
 
 # Social widget
-SOCIAL = (("linkedin", "https://www.linkedin.com/in/danielalorcanunez/"),
-		 )
+SOCIAL = (
+    ("linkedin", "https://www.linkedin.com/in/danielalorcanunez/"),
+    ("rss", "https://danilorca.com/feeds/podcast.atom.xml"),
+)
 
 DEFAULT_PAGINATION = 100
 
@@ -39,3 +41,14 @@ PLUGINS = ["tipue_search", "podcast_feed"]
 DIRECT_TEMPLATES = ["index", "tags", "categories", "authors", "archives", "search"]
 
 PODCAST_FEED_PATH = "feeds/podcast.atom.xml"
+PODCAST_FEED_TITLE = "En-préndete"
+PODCAST_FEED_EXPLICIT = False
+PODCAST_FEED_LANGUAGE = "es"
+PODCAST_FEED_COPYRIGHT = "Daniela Lorca"
+PODCAST_FEED_SUBTITLE = "Inspirar y entretener con historias notables de emprendedores"
+PODCAST_FEED_AUTHOR = "Daniela Lorca"
+PODCAST_FEED_SUMMARY = "Motivar a los auditores a emprender respondiendo las preguntas que puedan tener sobre esta experiencia, y compartiendo detalles de la realidad del emprendimiento"
+PODCAST_FEED_IMAGE = "https://danilorca.com/images/profile.jpg"
+PODCAST_FEED_OWNER_NAME = "Patricio del Sol"
+PODCAST_FEED_OWNER_EMAIL = "pdelsol@gmail.com"
+PODCAST_FEED_CATEGORY = ["Business", "Entrepreneurship"]
