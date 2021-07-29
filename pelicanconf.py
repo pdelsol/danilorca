@@ -35,5 +35,5 @@ FAVICON = "/images/background.jpg"
 CUSTOM_CSS ="images/extra.css"
 
 PLUGIN_PATHS = ["plugins"]
-PLUGINS = ["tipue_search"]
+PLUGINS = ["tipue_search", "podcast_feed"]
 DIRECT_TEMPLATES = ["index", "tags", "categories", "authors", "archives", "search"]
