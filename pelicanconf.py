@@ -42,7 +42,7 @@ DIRECT_TEMPLATES = ["index", "tags", "categories", "authors", "archives", "searc
 
 PODCAST_FEED_PATH = "feeds/podcast.atom.xml"
 PODCAST_FEED_TITLE = "En-préndete"
-PODCAST_FEED_EXPLICIT = False
+PODCAST_FEED_EXPLICIT = "Clean"
 PODCAST_FEED_LANGUAGE = "es"
 PODCAST_FEED_COPYRIGHT = "Daniela Lorca"
 PODCAST_FEED_SUBTITLE = "Inspirar y entretener con historias notables de emprendedores"
