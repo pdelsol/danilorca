@@ -231,10 +231,13 @@ class iTunesWriter(Writer):
         # Summary for the article. This can be obtained either from
         # a ``:description:`` or a ``:summary:`` directive.
         #  ex: <itunes:summary>In this episode... </itunes:summary>
+        tags = ""
+        if hasattr(item, "tags"):
+            tags = " ".join([f"#{tag.name}" for tag in item.tags])
         if hasattr(item, "description"):
             items["itunes:summary"] = item.description
         else:
-            items["itunes:summary"] = Markup(f"{item.title} - {item.person} de {item.company}").striptags()
+            items["itunes:summary"] = Markup(f"{item.title} - {item.person} de {item.company} {tags}").striptags()
 
         items["description"] = "<![CDATA[{}]]>".format(
             items["itunes:summary"]
@@ -270,8 +273,8 @@ class iTunesWriter(Writer):
         if hasattr(item, "mp3"):
             enclosure = {"url": item.mp3}
             # Include the file size if available.
-            if hasattr(item, "length"):
-                enclosure["length"] = item.length
+            if hasattr(item, "duration"):
+                enclosure["length"] = item.duration
             # Include the audio mime type if available...
             if hasattr(item, "mimetype"):
                 enclosure["type"] = item.mimetype
