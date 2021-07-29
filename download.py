@@ -6,16 +6,18 @@ from dateutil.relativedelta import relativedelta
 from urllib.request import urlretrieve
 from urllib.parse   import quote
 from os import path
+from mutagen.mp3 import MP3
 
 HISTORIC = True
 BASE_URL = "https://www.radioagricultura.cl/search/?type=podcast&format=json&programa=enprendete&limit=20"
 
-def write_post(day, podcast):
+def write_post(day, duration, podcast):
     content = (
         f"Title: {podcast['titulo']}\n"
         f"Date: {day}\n"
         f"Category: Podcast\n"
         f"Mp3: https://s.danilorca.com/{day}.mp3\n"
+        f"Duration: {duration}\n"
         f"\n"
         f"<a href=\"https://s.danilorca.com/{day}.mp3\" type=\"audio/mpeg\">\n"
         f"Escuchar\n"
@@ -33,15 +35,21 @@ def download_podcast(day, podcast):
         print(f"ADD: {day}")
         urlretrieve(f"{mp3_remote[:7]}{quote(mp3_remote[7:])}", mp3_local)
         download_data(day, podcast)
+        duration = get_mp3_duration(mp3_local)
+        write_post(day, duration, podcast)
     else:
         print(f"SKIP: {day}")
+
+def get_mp3_duration(path):
+    try:
+        return int(MP3(path).info.length)
+    except:
+        return None
 
 def download_data(day, podcast):
     json_local = f"downloads/{day}.json"
     with open(json_local, "w") as outfile:
         json.dump(podcast, outfile, indent=2, sort_keys=True)
-    write_post(day, podcast)
-
 
 date_end = date(date.today().year, date.today().month, 1)
 
