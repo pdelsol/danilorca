@@ -37,3 +37,5 @@ CUSTOM_CSS ="images/extra.css"
 PLUGIN_PATHS = ["plugins"]
 PLUGINS = ["tipue_search", "podcast_feed"]
 DIRECT_TEMPLATES = ["index", "tags", "categories", "authors", "archives", "search"]
+
+PODCAST_FEED_PATH = "feeds/podcast.atom.xml"
