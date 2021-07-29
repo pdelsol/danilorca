@@ -237,7 +237,7 @@ class iTunesWriter(Writer):
             items["itunes:summary"] = Markup(f"{item.title} - {item.person} de {item.company}").striptags()
 
         items["description"] = "<![CDATA[{}]]>".format(
-            Markup(item.summary)
+            items["itunes:summary"]
             )
 
         # Date the article was last modified.
