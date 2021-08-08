@@ -46,9 +46,17 @@ def is_podcast_in_s3(day):
 
 def upload_files_to_s3(day):
     s3 = boto3.resource("s3")
-    s3.meta.client.upload_file(f"downloads/{day}.mp3", "s.danilorca.com", f"{day}.mp3")
     s3.meta.client.upload_file(
-        f"downloads/{day}.json", "s.danilorca.com", f"{day}.json"
+        f"downloads/{day}.mp3",
+        "s.danilorca.com",
+        f"{day}.mp3",
+        ExtraArgs={"ContentType": "audio/mpeg"},
+    )
+    s3.meta.client.upload_file(
+        f"downloads/{day}.json",
+        "s.danilorca.com",
+        f"{day}.json",
+        ExtraArgs={"ContentType": "application/json"},
     )
 
 
