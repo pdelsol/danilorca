@@ -30,13 +30,14 @@ jobs:
         pip install poetry
         poetry config virtualenvs.create false
         poetry install
+        git checkout -b autoupdate-podcast
 
     - name: Download new Episodes
       run: |
         python download.py
 
     - name: Create Pull Request
-      uses: EndBug/add-and-commit@v7
+      uses: stefanzweifel/git-auto-commit-action@v4
       with:
         commit_message: Updating podcast episodes
         branch: autoupdate-podcast
