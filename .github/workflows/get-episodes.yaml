@@ -42,3 +42,5 @@ jobs:
         branch: autoupdate-podcast
         commit-message: 💬 Podcast Auto Update
         title: 💬 Podcast Auto Update
+        reviewers: pdelsol
+        assignees: pdelsol
