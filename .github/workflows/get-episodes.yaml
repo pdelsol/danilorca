@@ -1,0 +1,56 @@
+name: Get Episodes from Radio
+
+#on:
+#  schedule:
+#    - cron:  "0 0 * * 0"
+
+on:
+  push:
+    branches-ignore:
+      - master
+
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_ECR_ACCOUNT_URL: 782873725436.dkr.ecr.us-east-1.amazonaws.com
+  AWS_REGION: us-east-1
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+jobs:
+  get-episodes:
+    name: Get Episodes from Radio
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    - name: Install Dependencies
+      run: |
+        sudo apt-get update -qq -y
+        python -m pip install --upgrade pip
+        pip install poetry
+        poetry config virtualenvs.create false
+        poetry install
+
+    - name: Download new episodes
+      run: |
+        poetry run download.py
+
+    - name: Upload to s3
+      run: |
+        poetry run download.py
+
+    - name: Create PR
+      run: |
+        poetry run download.py
+
+  pull-request:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: pull-request
+      uses: repo-sync/pull-request@v2
+      with:
+        destination_branch: "master"
+        github_token: ${{ secrets.GITHUB_TOKEN }}
