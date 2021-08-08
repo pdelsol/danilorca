@@ -1,0 +1,41 @@
+name: Get Episodes
+
+on:
+  schedule:
+    - cron:  "0 0 * * 0"
+
+env:
+  AWS_REGION: us-east-1
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+jobs:
+  get-episodes:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    - name: Install Dependencies
+      run: |
+        sudo apt-get update -qq -y
+        python -m pip install --upgrade pip
+        pip install poetry
+        poetry config virtualenvs.create false
+        poetry install
+
+    - name: Download new Episodes
+      run: |
+        python download.py
+
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v3
+      with:
+        base: master
+        branch: autoupdate-podcast
+        commit-message: 📻 Podcast Auto Update
+        title: 📻 Podcast Auto Update
+        reviewers: pdelsol
+        assignees: pdelsol

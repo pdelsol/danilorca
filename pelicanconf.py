@@ -18,15 +18,18 @@ DEFAULT_LANG = "es"
 LINKS = (
     ("Apple Podcast", "https://podcasts.apple.com/us/podcast/en-préndete/id1578813744"),
     ("Spotify Podcast", "https://open.spotify.com/show/1RObjUX8Hz1bJHe7yZrPb0"),
-    ("Radio Agricultura Podcast", "https://www.radioagricultura.cl/agriculturatv/2020/05/29/enprendete.html"),
+    (
+        "Radio Agricultura Podcast",
+        "https://www.radioagricultura.cl/agriculturatv/2020/05/29/enprendete.html",
+    ),
     ("Babytuto", "https://www.babytuto.com/"),
     ("Linkedin", "https://www.linkedin.com/in/danielalorcanunez/"),
 )
 
 # Social widget
-#SOCIAL = (
-    #("linkedin", "https://www.linkedin.com/in/danielalorcanunez/"),
-#)
+# SOCIAL = (
+# ("linkedin", "https://www.linkedin.com/in/danielalorcanunez/"),
+# )
 
 DEFAULT_PAGINATION = 100
 
@@ -37,7 +40,7 @@ THEME = "theme"
 THEME_COLOR = "dark"
 SITELOGO = "/images/profile.jpg"
 FAVICON = "/images/background.jpg"
-CUSTOM_CSS ="images/extra.css"
+CUSTOM_CSS = "images/extra.css"
 
 PLUGIN_PATHS = ["plugins"]
 PLUGINS = ["tipue_search", "podcast_feed"]
