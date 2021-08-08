@@ -22,6 +22,7 @@ def write_post(day, duration, podcast):
         f"Company: {podcast['titulo']}\n"
         f"Person: {podcast['titulo']}\n"
         f"Tags: {podcast['titulo']}\n"
+        f"Rating: 0\n"
         f"\n"
         f'<a href="https://s.danilorca.com/{day}.mp3" type="audio/mpeg">\n'
         f"Escuchar\n"
