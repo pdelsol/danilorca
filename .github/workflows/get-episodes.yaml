@@ -35,11 +35,7 @@ jobs:
       run: |
         python download.py
 
-  pull-request:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: pull-request
+    - name: Pull request
       uses: repo-sync/pull-request@v2
       with:
         destination_branch: "master"
