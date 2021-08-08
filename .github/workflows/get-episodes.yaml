@@ -1,4 +1,4 @@
-name: Get Episodes from Radio
+name: Get Episodes
 
 #on:
 #  schedule:
@@ -10,14 +10,12 @@ on:
       - master
 
 env:
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_ECR_ACCOUNT_URL: 782873725436.dkr.ecr.us-east-1.amazonaws.com
   AWS_REGION: us-east-1
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
 jobs:
   get-episodes:
-    name: Get Episodes from Radio
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -33,17 +31,9 @@ jobs:
         poetry config virtualenvs.create false
         poetry install
 
-    - name: Download new episodes
+    - name: Download new Episodes
       run: |
-        poetry run download.py
-
-    - name: Upload to s3
-      run: |
-        poetry run download.py
-
-    - name: Create PR
-      run: |
-        poetry run download.py
+        python download.py
 
   pull-request:
     runs-on: ubuntu-latest
