@@ -36,6 +36,7 @@ jobs:
         python download.py
 
     - name: Create Pull Request
-      uses: stefanzweifel/git-auto-commit-action@v4
+      uses: EndBug/add-and-commit@v7
       with:
         commit_message: Updating podcast episodes
+        branch: autoupdate-podcast
