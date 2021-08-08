@@ -38,5 +38,5 @@ jobs:
     - name: Create Pull Request
     - uses: stefanzweifel/git-auto-commit-action@v4
       with:
-        commit_message: 💬 Updating podcast episodes
+        commit_message: Updating podcast episodes
         branch: autoupdate-podcasts
