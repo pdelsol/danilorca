@@ -6,7 +6,8 @@ name: Get Episodes
 
 on:
   push:
-    - branch: update2weeks
+    branches:
+      - update2weeks
 
 env:
   AWS_REGION: us-east-1
