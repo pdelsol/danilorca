@@ -103,7 +103,7 @@ date_end = date(date.today().year, date.today().month, 1)
 if HISTORIC:
     date_start = date(2020, 5, 1)
 else:
-    date_start = date_end - relativedelta(months=5)
+    date_start = date_end - relativedelta(months=1)
 
 date_current = date_start
 while date_current <= date_end:
