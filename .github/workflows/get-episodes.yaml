@@ -1,8 +1,13 @@
 name: Get Episodes
 
+#on:
+#  schedule:
+#    - cron:  "0 0 * * 0"
+
 on:
-  schedule:
-    - cron:  "0 0 * * 0"
+  push:
+    branches:
+      - update2weeks
 
 env:
   AWS_REGION: us-east-1
