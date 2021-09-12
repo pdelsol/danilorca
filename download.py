@@ -1,4 +1,5 @@
 import json
+import os.path
 from datetime import date
 from urllib.parse import quote
 from urllib.request import urlretrieve
@@ -45,6 +46,13 @@ def is_podcast_in_s3(day):
         return True
 
 
+def is_podcast_in_content(day):
+    if os.path.isfile(f"content/{day}.md"):
+        return True
+    else:
+        return False
+
+
 def upload_files_to_s3(day):
     s3 = boto3.resource("s3")
     s3.meta.client.upload_file(
@@ -68,9 +76,10 @@ def download_podcast(day, podcast):
         print(f"{day}: Download")
         urlretrieve(f"{mp3_remote[:7]}{quote(mp3_remote[7:])}", mp3_local)
         download_data(day, podcast)
+        upload_files_to_s3(day)
+    if not is_podcast_in_content(day):
         duration = get_mp3_duration(mp3_local)
         write_post(day, duration, podcast)
-        upload_files_to_s3(day)
     else:
         print(f"{day}: Skip")
 
