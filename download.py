@@ -78,6 +78,7 @@ def download_podcast(day, podcast):
         download_data(day, podcast)
         upload_files_to_s3(day)
     if not is_podcast_in_content(day):
+        print(f"{day}: Write post")
         duration = get_mp3_duration(mp3_local)
         write_post(day, duration, podcast)
     else:
