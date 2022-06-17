@@ -68,13 +68,6 @@ def download_podcast(day, title, mp3_remote):
         print(f"{day}: Skip")
 
 
-def get_mp3_duration(filepath):
-    try:
-        return int(MP3(filepath).info.length)
-    except Exception:
-        return None
-
-
 def download_data(day, podcast):
     json_local = f"downloads/{day}.json"
     with open(json_local, "w") as outfile:
