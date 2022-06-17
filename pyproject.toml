@@ -7,11 +7,11 @@ authors = ["pdelsol <pato@admetricks.com>"]
 [tool.poetry.dependencies]
 python = "^3.9"
 requests = "^2.25.1"
-python-dateutil = "^2.8.1"
 ipdb = "^0.13.7"
 pelican = {extras = ["markdown"], version = "^4.6.0"}
 boto3 = "^1.18.16"
 beautifulsoup4 = "^4.11.1"
+Jinja2 = "3.0.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
