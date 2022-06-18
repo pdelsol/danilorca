@@ -1,28 +1,22 @@
 import json
 import os.path
-from datetime import date
-from urllib.parse import quote
 from urllib.request import urlretrieve
 
 import boto3
 import botocore
 import requests
-from dateutil.relativedelta import relativedelta
-from mutagen.mp3 import MP3
-
-HISTORIC = False
-BASE_URL = "https://www.radioagricultura.cl/search/?type=podcast&format=json&programa=enprendete&limit=20"
+from bs4 import BeautifulSoup
 
 
-def write_post(day, duration, podcast):
+def write_post(day, title):
     content = (
-        f"Title: {podcast['titulo']}\n"
+        f"Title: {title}\n"
         f"Date: {day}\n"
         f"Category: Podcast\n"
         f"Mp3: https://s.danilorca.com/{day}.mp3\n"
-        f"Company: {podcast['titulo']}\n"
-        f"Person: {podcast['titulo']}\n"
-        f"Tags: {podcast['titulo']}\n"
+        f"Company: {title}\n"
+        f"Person: {title}\n"
+        f"Tags: {title}\n"
         f"Rating: 0\n"
         f"\n"
         f'<a href="https://s.danilorca.com/{day}.mp3" type="audio/mpeg">\n'
@@ -47,10 +41,7 @@ def is_podcast_in_s3(day):
 
 
 def is_podcast_in_content(day):
-    if os.path.isfile(f"content/{day}.md"):
-        return True
-    else:
-        return False
+    return True if os.path.isfile(f"content/{day}.md") else False
 
 
 def upload_files_to_s3(day):
@@ -61,35 +52,20 @@ def upload_files_to_s3(day):
         f"{day}.mp3",
         ExtraArgs={"ContentType": "audio/mpeg"},
     )
-    s3.meta.client.upload_file(
-        f"downloads/{day}.json",
-        "s.danilorca.com",
-        f"{day}.json",
-        ExtraArgs={"ContentType": "application/json"},
-    )
 
 
-def download_podcast(day, podcast):
-    mp3_remote = podcast["contenido"]
+def download_podcast(day, title, mp3_remote):
     mp3_local = f"downloads/{day}.mp3"
     if not is_podcast_in_s3(day):
         print(f"{day}: Download")
-        urlretrieve(f"{mp3_remote[:7]}{quote(mp3_remote[7:])}", mp3_local)
-        download_data(day, podcast)
+        urlretrieve(mp3_remote, mp3_local)
+        download_data(day, title)
         upload_files_to_s3(day)
     if not is_podcast_in_content(day):
         print(f"{day}: Write post")
-        duration = get_mp3_duration(mp3_local)
-        write_post(day, duration, podcast)
+        write_post(day, title)
     else:
         print(f"{day}: Skip")
-
-
-def get_mp3_duration(filepath):
-    try:
-        return int(MP3(filepath).info.length)
-    except Exception:
-        return None
 
 
 def download_data(day, podcast):
@@ -98,21 +74,18 @@ def download_data(day, podcast):
         json.dump(podcast, outfile, indent=2, sort_keys=True)
 
 
-date_end = date(date.today().year, date.today().month, 1)
-
-if HISTORIC:
-    date_start = date(2020, 5, 1)
-else:
-    date_start = date_end - relativedelta(months=1)
-
-date_current = date_start
-while date_current <= date_end:
-    URL = f"{BASE_URL}&year={date_current.year}&month={date_current.month}"
-    print(f"-- {date_current} --")
-    response = requests.get(URL)
-    if response.status_code == 200:
-        podcasts = response.json()["post"]
-        for podcast in podcasts:
-            day = podcast["url"][41:51].replace("/", "-")
-            download_podcast(day, podcast)
-    date_current += relativedelta(months=1)
+URL = "https://www.radioagricultura.cl/podcast_programas/en-prendete/"
+page = requests.get(URL)
+soup = BeautifulSoup(page.content, "html.parser")
+for episode in soup.find_all("article", {"class": "podcast"}):
+    title = episode.find("h2").find("a").get_text()
+    day = episode.find("time")["datetime"][:10]
+    if episode.find("audio"):
+        if episode.find("audio") and episode.find("audio").has_attr("src"):
+            mp3 = episode.find("audio")["src"]
+        elif episode.find("audio").find("source").has_attr("src"):
+            mp3 = episode.find("audio").find("source")["src"]
+        else:
+            print(f"{day}: ERROR: COULDNT FIND AUDIO FILE")
+            continue
+    download_podcast(day, title, mp3)
