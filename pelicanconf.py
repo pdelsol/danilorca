@@ -20,7 +20,7 @@ LINKS = (
     ("Spotify Podcast", "https://open.spotify.com/show/1RObjUX8Hz1bJHe7yZrPb0"),
     (
         "Radio Agricultura Podcast",
-        "https://www.radioagricultura.cl/agriculturatv/2020/05/29/enprendete.html",
+        "https://www.radioagricultura.cl/podcast_programas/en-prendete/",
     ),
     ("Babytuto", "https://www.babytuto.com/"),
     ("Linkedin", "https://www.linkedin.com/in/danielalorcanunez/"),
