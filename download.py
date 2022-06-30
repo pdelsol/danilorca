@@ -23,7 +23,7 @@ def write_post(day, title):
         f"Escuchar\n"
         f"</a>\n"
     )
-    f = open(f"content/{day}.md", "w")
+    f = open(f"content/{day}.md", "w", encoding="utf8")
     f.write(content)
     f.close()
 
@@ -41,7 +41,7 @@ def is_podcast_in_s3(day):
 
 
 def is_podcast_in_content(day):
-    return True if os.path.isfile(f"content/{day}.md") else False
+    return os.path.isfile(f"content/{day}.md")
 
 
 def upload_files_to_s3(day):
@@ -70,7 +70,7 @@ def download_podcast(day, title, mp3_remote):
 
 def download_data(day, podcast):
     json_local = f"downloads/{day}.json"
-    with open(json_local, "w") as outfile:
+    with open(json_local, "w", encoding="utf8") as outfile:
         json.dump(podcast, outfile, indent=2, sort_keys=True)
 
 
@@ -83,7 +83,9 @@ for episode in soup.find_all("article", {"class": "podcast"}):
     episode_page = requests.get(episode.find("h2").find("a")["href"])
     episode_soup = BeautifulSoup(episode_page.content, "html.parser")
     if episode_soup.find("audio"):
-        if episode_soup.find("audio") is not None and episode_soup.find("audio").has_attr("src"):
+        if episode_soup.find("audio") is not None and episode_soup.find(
+            "audio"
+        ).has_attr("src"):
             mp3_link = episode_soup.find("audio")["src"]
         elif episode_soup.find("audio").find("source").has_attr("src"):
             mp3_link = episode_soup.find("audio").find("source")["src"]
