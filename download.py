@@ -23,7 +23,7 @@ def write_post(day, title):
         f"Escuchar\n"
         f"</a>\n"
     )
-    f = open(f"content/{day}.md", "w")
+    f = open(f"content/{day}.md", "w", encoding="utf8")
     f.write(content)
     f.close()
 
@@ -41,7 +41,7 @@ def is_podcast_in_s3(day):
 
 
 def is_podcast_in_content(day):
-    return True if os.path.isfile(f"content/{day}.md") else False
+    return os.path.isfile(f"content/{day}.md")
 
 
 def upload_files_to_s3(day):
@@ -70,22 +70,26 @@ def download_podcast(day, title, mp3_remote):
 
 def download_data(day, podcast):
     json_local = f"downloads/{day}.json"
-    with open(json_local, "w") as outfile:
+    with open(json_local, "w", encoding="utf8") as outfile:
         json.dump(podcast, outfile, indent=2, sort_keys=True)
 
 
-URL = "https://www.radioagricultura.cl/podcast_programas/en-prendete/"
-page = requests.get(URL)
+page = requests.get("https://www.radioagricultura.cl/podcast_programas/en-prendete/")
 soup = BeautifulSoup(page.content, "html.parser")
 for episode in soup.find_all("article", {"class": "podcast"}):
     title = episode.find("h2").find("a").get_text()
     day = episode.find("time")["datetime"][:10]
-    if episode.find("audio"):
-        if episode.find("audio") and episode.find("audio").has_attr("src"):
-            mp3 = episode.find("audio")["src"]
-        elif episode.find("audio").find("source").has_attr("src"):
-            mp3 = episode.find("audio").find("source")["src"]
+    print(f"{day}: {title}")
+    episode_page = requests.get(episode.find("h2").find("a")["href"])
+    episode_soup = BeautifulSoup(episode_page.content, "html.parser")
+    if episode_soup.find("audio"):
+        if episode_soup.find("audio") is not None and episode_soup.find(
+            "audio"
+        ).has_attr("src"):
+            mp3_link = episode_soup.find("audio")["src"]
+        elif episode_soup.find("audio").find("source").has_attr("src"):
+            mp3_link = episode_soup.find("audio").find("source")["src"]
         else:
             print(f"{day}: ERROR: COULDNT FIND AUDIO FILE")
             continue
-    download_podcast(day, title, mp3)
+        download_podcast(day, title, mp3_link)
