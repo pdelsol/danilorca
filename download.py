@@ -92,14 +92,14 @@ for episode in soup.find_all("article", {"class": "podcast"}):
         else:
             print(f"{day}: ERROR: COULDNT FIND AUDIO FILE")
             continue
-        if "mp3" in mp3_link:
-            download_podcast(day, title, mp3_link)
-        else:
-            print(f"ERROR: no mp3 file found for {day}")
+        if "mp3" not in mp3_link:
+            print(f"{day}: ERROR: FILE IS NOT MP3")
+            continue
+        download_podcast(day, title, mp3_link)
 
 
 missing_ep = "https://www.radioagricultura.cl/podcast/en-prendete-sabado-08-octubre-2022/"
-episode_page = requests.get(episode.find("h2").find("a")["href"])
+episode_page = requests.get(missing_ep)
 episode_soup = BeautifulSoup(episode_page.content, "html.parser")
 if episode_soup.find("audio"):
     if episode_soup.find("audio") is not None and episode_soup.find(
@@ -110,8 +110,6 @@ if episode_soup.find("audio"):
         mp3_link = episode_soup.find("audio").find("source")["src"]
     else:
         print(f"{day}: ERROR: COULDNT FIND AUDIO FILE")
-        continue
-    if "mp3" in mp3_link:
-        download_podcast(day, title, mp3_link)
-    else:
-        print(f"ERROR: no mp3 file found for {day}")
+    if "mp3" not in mp3_link:
+        print(f"{day}: ERROR: FILE IS NOT MP3")
+    download_podcast(day, title, mp3_link)
