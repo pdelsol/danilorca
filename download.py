@@ -92,4 +92,7 @@ for episode in soup.find_all("article", {"class": "podcast"}):
         else:
             print(f"{day}: ERROR: COULDNT FIND AUDIO FILE")
             continue
+        if "mp3" not in mp3_link:
+            print(f"{day}: ERROR: FILE IS NOT MP3")
+            continue
         download_podcast(day, title, mp3_link)
