@@ -1,6 +1,6 @@
 import json
 import os.path
-from urllib.request import urlretrieve
+import urllib
 
 import boto3
 import botocore
@@ -58,7 +58,7 @@ def download_podcast(day, title, mp3_remote):
     mp3_local = f"downloads/{day}.mp3"
     if not is_podcast_in_s3(day):
         print(f"{day}: Download")
-        urlretrieve(mp3_remote, mp3_local)
+        urllib.request.urlretrieve(mp3_remote, mp3_local)
         download_data(day, title)
         upload_files_to_s3(day)
     if not is_podcast_in_content(day):
@@ -73,7 +73,9 @@ def download_data(day, podcast):
     with open(json_local, "w", encoding="utf8") as outfile:
         json.dump(podcast, outfile, indent=2, sort_keys=True)
 
-
+opener = urllib.request.build_opener()
+opener.addheaders = [("User-agent", "Mozilla/5.0")]
+urllib.request.install_opener(opener)
 page = requests.get("https://www.radioagricultura.cl/podcast_programas/en-prendete/")
 soup = BeautifulSoup(page.content, "html.parser")
 for episode in soup.find_all("article", {"class": "podcast"}):
