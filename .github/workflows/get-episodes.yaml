@@ -24,7 +24,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install poetry
         poetry config virtualenvs.create false
-        poetry install
+        poetry install --no-root
 
     - name: Download new Episodes
       run: |
