@@ -37,3 +37,5 @@ aws s3 sync downloads/ s3://s.danilorca.com/
 ```
 git push
 ```
+
+v1
