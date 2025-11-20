@@ -1,6 +1,7 @@
 import json
 import os.path
-import urllib
+import re
+import subprocess
 
 import boto3
 import botocore
@@ -36,6 +37,9 @@ def is_podcast_in_s3(day):
         if e.response["Error"]["Code"] == "404":
             return False
         return None  # Something else has gone wrong.
+    except botocore.exceptions.NoCredentialsError:
+        # No AWS credentials available, assume file doesn't exist
+        return False
     else:
         return True
 
@@ -45,20 +49,27 @@ def is_podcast_in_content(day):
 
 
 def upload_files_to_s3(day):
-    s3 = boto3.resource("s3")
-    s3.meta.client.upload_file(
-        f"downloads/{day}.mp3",
-        "s.danilorca.com",
-        f"{day}.mp3",
-        ExtraArgs={"ContentType": "audio/mpeg"},
-    )
+    try:
+        s3 = boto3.resource("s3")
+        s3.meta.client.upload_file(
+            f"downloads/{day}.mp3",
+            "s.danilorca.com",
+            f"{day}.mp3",
+            ExtraArgs={"ContentType": "audio/mpeg"},
+        )
+    except botocore.exceptions.NoCredentialsError:
+        print(f"{day}: WARNING: No AWS credentials, skipping S3 upload")
 
 
 def download_podcast(day, title, mp3_remote):
     mp3_local = f"downloads/{day}.mp3"
     if not is_podcast_in_s3(day):
         print(f"{day}: Download")
-        urllib.request.urlretrieve(mp3_remote, mp3_local)
+        response = requests.get(mp3_remote, stream=True)
+        response.raise_for_status()
+        with open(mp3_local, "wb") as f:
+            for chunk in response.iter_content(chunk_size=8192):
+                f.write(chunk)
         download_data(day, title)
         upload_files_to_s3(day)
     if not is_podcast_in_content(day):
@@ -68,28 +79,64 @@ def download_podcast(day, title, mp3_remote):
         print(f"{day}: Skip")
 
 
+def download_youtube():
+    command = """
+        yt-dlp -f "bestvideo+bestaudio/best" \
+        --merge-output-format mp4 \
+        --ignore-errors \
+        --concurrent-fragments 10 \
+        --downloader-args "ffmpeg:-hwaccel videotoolbox" \
+        --no-keep-video \
+        --no-overwrites \
+        --output "%(upload_date>%Y-%m-%d)s %(title)s (%(id)s).%(ext)s" \
+        "https://www.youtube.com/playlist?list=PLLFg6C6vW-3MIV54VGs7sx-_eBIdWK8dO"
+    """
+    subprocess.run(command, shell=True)
+
+
 def download_data(day, podcast):
     json_local = f"downloads/{day}.json"
     with open(json_local, "w", encoding="utf8") as outfile:
         json.dump(podcast, outfile, indent=2, sort_keys=True)
 
-opener = urllib.request.build_opener()
-opener.addheaders = [("User-agent", "Mozilla/5.0")]
-urllib.request.install_opener(opener)
-page = requests.get("https://www.radioagricultura.cl/podcast_programas/en-prendete/")
+
+headers = {"User-Agent": "Mozilla/5.0"}
+page = requests.get(
+    "https://www.radioagricultura.cl/episodios-completos/en-prendete/",
+    headers=headers,
+)
 soup = BeautifulSoup(page.content, "html.parser")
-for episode in soup.find_all("article", {"class": "podcast"}):
-    title = episode.find("h2").find("a").get_text()
-    day = episode.find("time")["datetime"][:10]
+# Find all figure elements that contain the main-article-box-card class
+for episode in soup.select("figure.main-article-box-card"):
+    # Find the title link
+    title_link = episode.find("a", {"class": "main-article-box-card__permalink"})
+    if not title_link:
+        continue
+
+    title = title_link.get_text().strip()
+    episode_url = title_link["href"]
+
+    # Extract date from URL (format: _YYYYMMDD)
+    # Example: en-prendete-sabado-08-noviembre-2025_20251108/
+    date_match = re.search(r"_(\d{8})", episode_url)
+    if not date_match:
+        print(f"ERROR: Could not extract date from URL: {episode_url}")
+        continue
+
+    date_str = date_match.group(1)  # YYYYMMDD format
+    day = f"{date_str[:4]}-{date_str[4:6]}-{date_str[6:8]}"  # Convert to YYYY-MM-DD
+
     print(f"{day}: {title}")
-    episode_page = requests.get(episode.find("h2").find("a")["href"])
+    episode_page = requests.get(episode_url)
     episode_soup = BeautifulSoup(episode_page.content, "html.parser")
     if episode_soup.find("audio"):
         if episode_soup.find("audio") is not None and episode_soup.find(
             "audio"
         ).has_attr("src"):
             mp3_link = episode_soup.find("audio")["src"]
-        elif episode_soup.find("audio").find("source").has_attr("src"):
+        elif episode_soup.find("audio").find("source") and episode_soup.find(
+            "audio"
+        ).find("source").has_attr("src"):
             mp3_link = episode_soup.find("audio").find("source")["src"]
         else:
             print(f"{day}: ERROR: COULDNT FIND AUDIO FILE")

@@ -13,9 +13,8 @@ Mp3s are uploaded to a s3 bucket.
 ## developing
 ### deps
 
-```
-pip install poetry
-poetry install
+```bash
+uv sync
 ```
 ## create static site
 
@@ -29,7 +28,7 @@ pelican --listen
 ### download new radio episodes
 
 ```
-python download.py
+uv run python download.c
 aws s3 sync downloads/ s3://s.danilorca.com/
 ```
 
