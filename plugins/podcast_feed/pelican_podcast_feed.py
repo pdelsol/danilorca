@@ -10,7 +10,10 @@ from __future__ import unicode_literals
 import six
 from feedgenerator import Rss201rev2Feed
 from feedgenerator.django.utils.feedgenerator import rfc2822_date
-from jinja2 import Markup
+try:
+    from jinja2 import Markup
+except ImportError:
+    from markupsafe import Markup
 from pelican import signals
 from pelican.generators import Generator
 from pelican.utils import set_date_tzinfo
