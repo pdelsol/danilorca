@@ -37,4 +37,10 @@ aws s3 sync downloads/ s3://s.danilorca.com/
 git push
 ```
 
-v1
+publishes to spotify
+
+https://creators.spotify.com/
+
+publishes to apple
+
+https://podcastsconnect.apple.com/
