@@ -5,3 +5,10 @@
 2025-02-15 - Videojuegos educativos y una historia de película
 2025-03-01 - Entrenar la mente para lograr resultados
 2025-11-15 - Consultoría avanzada con APLAID
+
+5 files not found (these episodes don't exist yet):
+2024-10-26
+2025-02-15
+2025-02-28
+2025-11-15
+2025-11-22
