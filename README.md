@@ -28,7 +28,7 @@ pelican --listen
 ### download new radio episodes
 
 ```
-uv run python download.c
+uv run python download
 aws s3 sync downloads/ s3://s.danilorca.com/
 ```
 
