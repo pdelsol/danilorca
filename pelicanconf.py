@@ -24,7 +24,7 @@ LINKS = (
     ("Spotify Podcast", "https://open.spotify.com/show/1RObjUX8Hz1bJHe7yZrPb0"),
     (
         "Radio Agricultura Podcast",
-        "https://www.radioagricultura.cl/podcast_programas/en-prendete/",
+        "https://www.radioagricultura.cl/episodios-completos/en-prendete/",
     ),
     ("Instagram", "https://www.instagram.com/danilorca"),
     ("Linkedin", "https://www.linkedin.com/in/danielalorcanunez/"),
