@@ -10,7 +10,11 @@ from __future__ import unicode_literals
 import six
 from feedgenerator import Rss201rev2Feed
 from feedgenerator.django.utils.feedgenerator import rfc2822_date
-from jinja2 import Markup
+
+try:
+    from jinja2 import Markup
+except ImportError:
+    from markupsafe import Markup
 from pelican import signals
 from pelican.generators import Generator
 from pelican.utils import set_date_tzinfo
@@ -260,6 +264,11 @@ class iTunesWriter(Writer):
         #  <itunes:image href="http://example.com/Episodio1.jpg" />
         if hasattr(item, "image"):
             items["itunes:image"] = {"href": "{0}{1}".format(self.site_url, item.image)}
+        else:
+            # Auto-generate image URL based on date: YYYY-MM-DD.webp
+            episode_date = item.date.strftime("%Y-%m-%d")
+            image_url = f"https://s.danilorca.com/{episode_date}.webp"
+            items["itunes:image"] = {"href": image_url}
 
         # Information about the episode audio.
         #  ex: <enclosure url="http://example.com/episode.m4a"

@@ -2,7 +2,7 @@
 
 {% block meta %}
 <meta name="author" content="{{ article.author.name }}" />
-<meta name="description" content="{{ article.summary|striptags|escape }}" />
+<meta name="description" content="{{ article.company }} - {{ article.person }} - {{ article.title }}" />
 <meta name="keywords" content="{{ article.tags|join(', ')|escape }}">
 
 {% if article.translations -%}
@@ -24,10 +24,12 @@
       {% import 'partial/translations.html' as translations with context %}
       {{ translations.translations_for(article) }}
     {% endif %}
-    <h1 id="{{ article.slug }}">{{ article.title }} - {{ article.person }} de {{ article.company }}</h1>
-      {{ _('%(when)s',
-           when=article.locale_date) }}
-
+    <h1 id="{{ article.slug }}" style="margin-bottom: 10px;">{{ article.title }}</h1>
+    <p style="font-size: 1.2em; color: #888; margin-bottom: 20px;">
+      {{ article.person }} de {{ article.company }}
+    </p>
+    <p style="color: #888;">
+      {{ _('%(when)s', when=article.locale_date) }}
       {% if PLUGINS and 'post_stats' in PLUGINS %}
         &#8226; {{ _('%(minutes)s min read', minutes=article.stats['read_mins']) }}
       {% endif %}
@@ -44,15 +46,48 @@
     </script>
   {% endif %}
 
-  <div style="text-align: center; background: #eee; padding: 60px 0px 60px 0px;">
-    <a href="{{ article.mp3 }}"><img class="play" src="/images/play.png"><div>Escuchar</div></a>
+  {# Episode image if exists #}
+  {% set episode_date = article.date.strftime('%Y-%m-%d') %}
+  <div style="margin: 30px 0;">
+    <img src="https://s.danilorca.com/{{ episode_date }}.webp" 
+         alt="{{ article.title }}"
+         style="width: 100%; max-width: 800px; height: auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); display: block; margin: 0 auto;"
+         onerror="this.style.display='none'">
   </div>
-  <div class="tag-cloud">
-    <p>
+
+  {# Audio player section with HTML5 player #}
+  <div style="margin: 30px 0; padding: 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+    <h2 style="color: white; text-align: center; margin-top: 0; margin-bottom: 20px; font-size: 1.5em;">Escuchar Episodio</h2>
+    <audio controls style="width: 100%; max-width: 800px; display: block; margin: 0 auto; border-radius: 50px; background: rgba(255,255,255,0.9);">
+      <source src="{{ article.mp3 }}" type="audio/mpeg">
+      Tu navegador no soporta el elemento de audio.
+    </audio>
+  </div>
+
+  {# YouTube embed if Youtube ID exists #}
+  {% if article.youtube_id %}
+  <div style="margin: 30px 0;">
+    <h2 style="margin-bottom: 20px; text-align: center;">Ver en YouTube</h2>
+    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+      <iframe 
+        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
+        src="https://www.youtube.com/embed/{{ article.youtube_id }}"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+  {% endif %}
+
+  {# Tags section #}
+  <div style="margin: 30px 0; padding: 20px; background: rgba(255,255,255,0.03); border-radius: 8px;">
+    <p style="margin: 0;">
       {% if article.tags %}
-      {% for tag in article.tags %}
-      <a href="{{ SITEURL }}/{{ tag.url }}">{{ tag }}</a>
-      {% endfor %}
+        <strong>Tags:</strong>
+        {% for tag in article.tags %}
+          <a href="{{ SITEURL }}/{{ tag.url }}" style="display: inline-block; padding: 5px 12px; margin: 4px; background: rgba(102, 126, 234, 0.15); border-radius: 20px; text-decoration: none; font-size: 0.9em; transition: background 0.2s;" onmouseover="this.style.background='rgba(102, 126, 234, 0.25)'" onmouseout="this.style.background='rgba(102, 126, 234, 0.15)'">{{ tag }}</a>
+        {% endfor %}
       {% endif %}
     </p>
   </div>

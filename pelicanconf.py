@@ -14,15 +14,19 @@ TIMEZONE = "America/Santiago"
 
 DEFAULT_LANG = "es"
 
+# Date format in Spanish
+LOCALE = ("es_ES.UTF-8", "es_CL.UTF-8")
+DEFAULT_DATE_FORMAT = "%d de %B de %Y"
+
 # Blogroll
 LINKS = (
     ("Apple Podcast", "https://podcasts.apple.com/us/podcast/en-préndete/id1578813744"),
     ("Spotify Podcast", "https://open.spotify.com/show/1RObjUX8Hz1bJHe7yZrPb0"),
     (
         "Radio Agricultura Podcast",
-        "https://www.radioagricultura.cl/podcast_programas/en-prendete/",
+        "https://www.radioagricultura.cl/episodios-completos/en-prendete/",
     ),
-    ("Babytuto", "https://www.babytuto.com/"),
+    ("Instagram", "https://www.instagram.com/danilorca"),
     ("Linkedin", "https://www.linkedin.com/in/danielalorcanunez/"),
 )
 
@@ -31,7 +35,15 @@ LINKS = (
 # ("linkedin", "https://www.linkedin.com/in/danielalorcanunez/"),
 # )
 
-DEFAULT_PAGINATION = 100
+DEFAULT_PAGINATION = False  # Disable pagination to show all episodes on one page
+
+# URL settings - use custom slug based on company-person-title
+ARTICLE_URL = "{slug}.html"
+ARTICLE_SAVE_AS = "{slug}.html"
+SLUG_REGEX_SUBSTITUTIONS = [
+    (r"[^\w\s-]", ""),  # remove non-alphanumeric characters except spaces and hyphens
+    (r"[-\s]+", "-"),  # replace spaces and multiple hyphens with single hyphen
+]
 
 # Uncomment following line if you want document-relative URLs when developing
 RELATIVE_URLS = True
@@ -43,7 +55,7 @@ FAVICON = "/images/background.jpg"
 CUSTOM_CSS = "images/extra.css"
 
 PLUGIN_PATHS = ["plugins"]
-PLUGINS = ["tipue_search", "podcast_feed"]
+PLUGINS = ["tipue_search", "podcast_feed", "custom_slug"]
 DIRECT_TEMPLATES = ["index", "tags", "categories", "authors", "archives", "search"]
 
 PODCAST_FEED_PATH = "feeds/podcast.atom.xml"
