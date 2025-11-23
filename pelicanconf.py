@@ -37,6 +37,14 @@ LINKS = (
 
 DEFAULT_PAGINATION = False  # Disable pagination to show all episodes on one page
 
+# URL settings - use custom slug based on company-person-title
+ARTICLE_URL = "{slug}.html"
+ARTICLE_SAVE_AS = "{slug}.html"
+SLUG_REGEX_SUBSTITUTIONS = [
+    (r"[^\w\s-]", ""),  # remove non-alphanumeric characters except spaces and hyphens
+    (r"[-\s]+", "-"),  # replace spaces and multiple hyphens with single hyphen
+]
+
 # Uncomment following line if you want document-relative URLs when developing
 RELATIVE_URLS = True
 
@@ -47,7 +55,7 @@ FAVICON = "/images/background.jpg"
 CUSTOM_CSS = "images/extra.css"
 
 PLUGIN_PATHS = ["plugins"]
-PLUGINS = ["tipue_search", "podcast_feed"]
+PLUGINS = ["tipue_search", "podcast_feed", "custom_slug"]
 DIRECT_TEMPLATES = ["index", "tags", "categories", "authors", "archives", "search"]
 
 PODCAST_FEED_PATH = "feeds/podcast.atom.xml"
