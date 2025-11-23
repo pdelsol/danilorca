@@ -157,12 +157,13 @@ class PodcastFeed(Rss201rev2Feed):
                 continue
             if key == "description":
                 content = item[key]
-                handler.startElement("description", {})
                 if not isinstance(content, six.text_type):
                     content = six.text_type(content, handler._encoding)
-                content = content.replace("<html><body>", "")
-                handler._write(content)
-                handler.endElement("description")
+                content = content.replace("<html><body>", "").replace(
+                    "</body></html>", ""
+                )
+                # Use addQuickElement with content for proper XML escaping
+                handler.addQuickElement(key, content)
             elif isinstance(item[key], six.text_type):
                 handler.addQuickElement(key, item[key])
             elif type(item[key]) is dict:
@@ -239,7 +240,8 @@ class iTunesWriter(Writer):
                 f'{item.person} de {item.company} ({tags}) conversa con Daniela Lorca en este episodio llamado "{item.title}"'
             ).striptags()
 
-        items["description"] = "<![CDATA[{}]]>".format(items["itunes:summary"])
+        # Don't add CDATA here, let the handler manage it in add_item_elements
+        items["description"] = items["itunes:summary"]
 
         # Date the article was last modified.
         #  ex: <pubDate>Fri, 13 Jun 2014 04:59:00 -0300</pubDate>
