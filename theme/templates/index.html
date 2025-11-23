@@ -12,50 +12,65 @@
   </script>
 {% endif %}
 
-{% for article in articles_page.object_list %}
-<article>
-  <header>
-    <h2><a href="{{ SITEURL }}/{{ article.url }}{% if not DISABLE_URL_HASH %}#{{ article.slug }}{% endif %}">"{{ article.title }}" – {{ article.person }} de {{ article.company }}</a></h2>
-    <p>
-      {{ _('%(when)s',
-           when=article.locale_date) }}
+{# Calculate statistics from all articles #}
+{% set all_articles = articles if articles else articles_page.object_list %}
+{% set total_episodes = all_articles|length %}
+{% set first_date = all_articles[-1].date if all_articles else none %}
+{% set last_date = all_articles[0].date if all_articles else none %}
 
-      {% if article.tags and not HOME_HIDE_TAGS %}
-          {% for tag in article.tags %}
-              <a href="{{ SITEURL }}/{{ tag.url }}">#{{ tag }}</a>{% if not loop.last %}{% endif %}
-          {% endfor %}
-      {% endif %}
+{% if first_date and last_date %}
+  {% set days_diff = (last_date - first_date).days %}
+  {% set years = (days_diff / 365)|int %}
+  {% set remaining_days = days_diff % 365 %}
+  {% set months = (remaining_days / 30)|int %}
+  {% set days = remaining_days % 30 %}
+{% endif %}
 
-      {% if PLUGINS and 'post_stats' in PLUGINS %}
-        &#8226; {{ _('%(minutes)s min read', minutes=article.stats['read_mins']) }}
-      {% endif %}
-    </p>
-  </header>
-  <!--<div>
-    {% if summarise or article.metadata['summary'] or SUMMARY_MAX_LENGTH %}
-      {% if  article.featured_image %}
-        <img src="{{ article.featured_image }}">
-      {% endif %}
-      <a href="{{ article.mp3 }}"><img class="play" src="/images/play.png"></a>
-      {{ article.summary }}
-      {% if article.content != article.summary %}
-        <br>
-        <a class="btn"
-           href="{{ SITEURL }}/{{ article.url }}{% if not DISABLE_URL_HASH %}#{{ article.slug }}{% endif %}">
-          {{ _('Continue reading') }}
-        </a>
-      {% endif %}
-    {% else %}
-      {{ article.content }}
+<div class="podcast-stats" style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 8px; margin-bottom: 30px; text-align: center;">
+  <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px;">
+    <div style="flex: 1; min-width: 150px;">
+      <div style="font-size: 2.5em; font-weight: bold; color: #4CAF50;">{{ total_episodes }}</div>
+      <div style="font-size: 1em; opacity: 0.8;">Episodios</div>
+    </div>
+    {% if years is defined %}
+    <div style="flex: 1; min-width: 150px;">
+      <div style="font-size: 2.5em; font-weight: bold; color: #2196F3;">{{ years }}</div>
+      <div style="font-size: 1em; opacity: 0.8;">Años</div>
+    </div>
+    <div style="flex: 1; min-width: 150px;">
+      <div style="font-size: 2.5em; font-weight: bold; color: #FF9800;">{{ months }}</div>
+      <div style="font-size: 1em; opacity: 0.8;">Meses</div>
+    </div>
+    <div style="flex: 1; min-width: 150px;">
+      <div style="font-size: 2.5em; font-weight: bold; color: #E91E63;">{{ days }}</div>
+      <div style="font-size: 1em; opacity: 0.8;">Días</div>
+    </div>
     {% endif %}
-  </div>-->
+  </div>
+</div>
+
+{% for article in all_articles %}
+<article style="margin-bottom: 10px;">
+  <div style="display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;">
+    <span style="color: #888; font-size: 0.9em; min-width: 100px;">{{ article.locale_date }}</span>
+    <h3 style="margin: 0; font-size: 1.1em; flex: 1;">
+      <a href="{{ SITEURL }}/{{ article.url }}{% if not DISABLE_URL_HASH %}#{{ article.slug }}{% endif %}" style="text-decoration: none;">
+        "{{ article.title }}" – {{ article.person }} ({{ article.company }})
+      </a>
+    </h3>
+    {% if article.tags and not HOME_HIDE_TAGS %}
+      <div style="font-size: 0.85em;">
+        {% for tag in article.tags %}
+          <a href="{{ SITEURL }}/{{ tag.url }}" style="opacity: 0.7;">#{{ tag }}</a>{% if not loop.last %} {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
   {% if not loop.last %}
-  <hr />
+  <hr style="margin: 8px 0; opacity: 0.3;" />
   {% endif %}
 </article>
 {% endfor %}
-
-{% include "partial/pagination.html" %}
 
 {% if GOOGLE_ADSENSE and GOOGLE_ADSENSE.ads.index_bottom %}
   <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>

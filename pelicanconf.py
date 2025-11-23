@@ -14,6 +14,10 @@ TIMEZONE = "America/Santiago"
 
 DEFAULT_LANG = "es"
 
+# Date format in Spanish
+LOCALE = ("es_ES.UTF-8", "es_CL.UTF-8")
+DEFAULT_DATE_FORMAT = "%d de %B de %Y"
+
 # Blogroll
 LINKS = (
     ("Apple Podcast", "https://podcasts.apple.com/us/podcast/en-préndete/id1578813744"),
@@ -31,7 +35,7 @@ LINKS = (
 # ("linkedin", "https://www.linkedin.com/in/danielalorcanunez/"),
 # )
 
-DEFAULT_PAGINATION = 100
+DEFAULT_PAGINATION = False  # Disable pagination to show all episodes on one page
 
 # Uncomment following line if you want document-relative URLs when developing
 RELATIVE_URLS = True
