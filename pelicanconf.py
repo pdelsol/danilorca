@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*- #
 
-AUTHOR = "Daniela Lorca"
-SITENAME = "Daniela Lorca"
+AUTHOR = "Dani Lorca"
+SITENAME = "Dani Lorca"
 SITEURL = "https://danilorca.com"
-SITETITLE = "Daniela Lorca"
+SITETITLE = "Dani Lorca"
 SITESUBTITLE = ""
 SITEDESCRIPTION = ""
 
@@ -59,12 +59,12 @@ PLUGINS = ["tipue_search", "podcast_feed", "custom_slug"]
 DIRECT_TEMPLATES = ["index", "tags", "categories", "authors", "archives", "search"]
 
 PODCAST_FEED_PATH = "feeds/podcast.atom.xml"
-PODCAST_FEED_TITLE = "En-préndete"
+PODCAST_FEED_TITLE = "En-préndete con Dani Lorca"
 PODCAST_FEED_EXPLICIT = "Clean"
 PODCAST_FEED_LANGUAGE = "es"
-PODCAST_FEED_COPYRIGHT = "Daniela Lorca"
+PODCAST_FEED_COPYRIGHT = "Dani Lorca"
 PODCAST_FEED_SUBTITLE = "Inspirar y entretener con historias notables de emprendedores"
-PODCAST_FEED_AUTHOR = "Daniela Lorca"
+PODCAST_FEED_AUTHOR = "Dani Lorca"
 PODCAST_FEED_SUMMARY = "Motivar a los auditores a emprender respondiendo las preguntas que puedan tener sobre esta experiencia, y compartiendo detalles de la realidad del emprendimiento"
 PODCAST_FEED_IMAGE = "https://danilorca.com/images/profile-itunes.jpeg"
 PODCAST_FEED_OWNER_NAME = "Patricio del Sol"
