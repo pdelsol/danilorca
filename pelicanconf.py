@@ -26,7 +26,7 @@ LINKS = (
         "Radio Agricultura Podcast",
         "https://www.radioagricultura.cl/podcast_programas/en-prendete/",
     ),
-    ("Babytuto", "https://www.babytuto.com/"),
+    ("Instagram", "https://www.instagram.com/danilorca"),
     ("Linkedin", "https://www.linkedin.com/in/danielalorcanunez/"),
 )
 
