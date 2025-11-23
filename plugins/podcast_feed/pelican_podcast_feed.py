@@ -237,7 +237,7 @@ class iTunesWriter(Writer):
             items["itunes:summary"] = item.description
         else:
             items["itunes:summary"] = Markup(
-                f'{item.person} de {item.company} ({tags}) conversa con Daniela Lorca en este episodio llamado "{item.title}"'
+                f'{item.person} de {item.company} ({tags}) conversa con Dani Lorca en este episodio llamado "{item.title}"'
             ).striptags()
 
         # Don't add CDATA here, let the handler manage it in add_item_elements
