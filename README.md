@@ -37,10 +37,9 @@ aws s3 sync downloads/ s3://s.danilorca.com/
 git push
 ```
 
-publishes to spotify
+reads from web: https://www.radioagricultura.cl/episodios-completos/en-prendete/
+reads from youtube: https://www.youtube.com/playlist?list=PLLFg6C6vW-3MIV54VGs7sx-_eBIdWK8dO
 
-https://creators.spotify.com/
-
-publishes to apple
-
-https://podcastsconnect.apple.com/
+publishes to web: https://radio.danilorca.com/
+publishes to spotify: https://creators.spotify.com/
+publishes to apple: https://podcastsconnect.apple.com/
